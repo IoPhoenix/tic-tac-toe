@@ -1,5 +1,6 @@
 import React from 'react';
 import Square from './Square';
+import calculateWinner from '../helpers';
 
 
 class Board extends React.Component {
@@ -14,7 +15,11 @@ class Board extends React.Component {
     handleClick(i) {
         console.log('Button was clicked!');
 
-        const squaresCopy = this.state.squares.slice(0);
+        // prevent double click:
+        if (this.state.squares[i]) return;
+
+
+        const squaresCopy = this.state.squares.slice();
         squaresCopy[i] = this.state.isXNext ? 'X' : '0';
         this.setState({ squares: squaresCopy, isXNext: !this.state.isXNext});
     }
@@ -31,7 +36,14 @@ class Board extends React.Component {
     }
 
     render() {
-        const status = 'Next player: X';
+        const winner = calculateWinner(this.state.squares);
+        let status;
+
+        if (winner) {
+            status =  'Winner is ' + winner;
+        } else {
+            status = `Next player: ${this.state.isXNext ? 'X' : '0'}`;
+        }
 
         return (
             <>

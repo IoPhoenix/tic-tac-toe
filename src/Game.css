@@ -4,17 +4,27 @@
   box-sizing: border-box;
 }
 
-
 .game {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
 }
 
+.board-row::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
 .square {
-  overflow: auto;
   cursor: pointer;
-  width: 60px;
   height: 60px;
-  margin-right: .2rem;
+  width: 60px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+}
+
+.square:focus {
+  outline: none;
 }
