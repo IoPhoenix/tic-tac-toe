@@ -11,7 +11,8 @@ class Game extends React.Component {
     super(props);
     this.state = {
         history: [Array(9).fill(null)],
-        isXNext: true
+        isXNext: true,
+        stepNumber: 0
     }
   }
 
@@ -23,11 +24,15 @@ class Game extends React.Component {
         [null, null, null,
         null, 'X', null,
         null, null, null],
+        
+        ...
     ]
     */ 
 
    handleClick = (i) => {
-     const history = this.state.history;
+     // throw away “future” history when we return back to past step:
+     const history = this.state.history.slice(0, this.state.stepNumber + 1);
+
      const current = history[history.length - 1];
      const squaresCopy = current.slice();
       
@@ -39,16 +44,44 @@ class Game extends React.Component {
       squaresCopy[i] = this.state.isXNext ? 'X' : '0';
       this.setState({
         history: history.concat([squaresCopy]),
-        isXNext: !this.state.isXNext});
+        isXNext: !this.state.isXNext,
+        stepNumber: history.length
+      })
+  }
+
+
+  goTo = (stepNumber) => {
+    this.setState({
+      history: this.state.history.slice(0, stepNumber + 1),
+      stepNumber: stepNumber,
+      isXNext: (stepNumber % 2) === 0
+    });
   }
 
   
   render() {
     const history = this.state.history;
-    const current = history[history.length - 1];
+    console.log('Current history: ', history);
+
+    // display board for current move number:
+    const current = history[this.state.stepNumber];
     const winner = calculateWinner(current);
+
+    const moves = history.map((_, moveNumber) => {
+      const description = moveNumber ? 'Go to move #' + moveNumber : 'Game start';
+
+      return (
+        <li className="mb2" key={moveNumber}>
+          <button 
+            className="move pointer grow bg-white ba b--light-gray f5 tc pa1"
+            onClick={() => this.goTo(moveNumber)}>
+              {description}
+          </button>
+        </li>
+      )
+    });
+
     let status;
-  
     if (winner) {
         status =  'Winner is ' + winner;
     } else {
@@ -56,11 +89,14 @@ class Game extends React.Component {
     }
 
     return (
-      <div className="game absolute avenir">
+      <div className="game avenir flex mt5 ml5">
         <Board 
           squares={current}
           onClick={this.handleClick}/>
-        <GameInfo status={status}/>
+        <GameInfo 
+          status={status}
+          moves={moves}
+          />
       </div>
     );
   }

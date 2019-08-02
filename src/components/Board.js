@@ -38,7 +38,7 @@ function Board(props) {
     }
 
     return (
-        <div className="board">
+        <div className="board mr5">
             {createBoard()}
         </div>
     )
