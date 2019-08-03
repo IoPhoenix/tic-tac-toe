@@ -62,11 +62,13 @@ class Game extends React.Component {
   
   render() {
     const history = this.state.history;
-    console.log('Current history: ', history);
 
     // display board for current move number:
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current);
+
+    const result = calculateWinner(current);
+
+    const winner = result && result.winner;
 
     const moves = history.map((_, moveNumber, array) => {
       const description = moveNumber ? 'Go to move #' + moveNumber : 'Game start';
@@ -81,8 +83,10 @@ class Game extends React.Component {
     });
 
     let status;
+    let winnerIndexes;
     if (winner) {
         status =  'Winner is ' + winner;
+        winnerIndexes = result.winnerIndexes;
     } else {
         status = `Next player: ${this.state.isXNext ? 'X' : '0'}`;
     }
@@ -90,6 +94,7 @@ class Game extends React.Component {
     return (
       <div className="game avenir flex mt5 ml5">
         <Board 
+          winnerIndexes={winnerIndexes}
           squares={current}
           onClick={this.handleClick}/>
         <GameInfo 

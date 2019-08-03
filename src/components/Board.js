@@ -5,10 +5,13 @@ import Square from './Square';
 function Board(props) {
 
     const renderSquare = (i) => {
+        const isWinner = props.winnerIndexes && props.winnerIndexes.includes(i);
+
         // pass its current value to each Square
         // 'X', 'O', or null for empty squares
         return (
             <Square 
+                isWinner={isWinner}
                 key={i}
                 value={props.squares[i]}
                 onClick={() => props.onClick(i)}
