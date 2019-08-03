@@ -2,6 +2,7 @@ import React from 'react';
 import 'tachyons';
 import Board from './components/Board';
 import GameInfo from './components/GameInfo';
+import ListItem from './components/ListItem';
 import calculateWinner from './helpers';
 import './Game.css';
 
@@ -67,18 +68,16 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current);
 
-    const moves = history.map((_, moveNumber) => {
+    const moves = history.map((_, moveNumber, array) => {
       const description = moveNumber ? 'Go to move #' + moveNumber : 'Game start';
+      const isLast = moveNumber === array.length - 1;
 
-      return (
-        <li className="mb2" key={moveNumber}>
-          <button 
-            className="move pointer grow bg-white ba b--light-gray f5 tc pa1"
-            onClick={() => this.goTo(moveNumber)}>
-              {description}
-          </button>
-        </li>
-      )
+      return <ListItem 
+                isLast={isLast}
+                key={moveNumber}
+                moveNumber={moveNumber} 
+                description={description} 
+                onClick={this.goTo} />
     });
 
     let status;
