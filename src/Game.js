@@ -38,8 +38,6 @@ class Game extends React.Component {
     */ 
 
    handleClick = (i, location) => {
-     console.log('Button was clicked!');
-
      // throw away “future” history when we return back to past step:
      const history = this.state.history.slice(0, this.state.stepNumber + 1);
      const current = history[history.length - 1];
@@ -54,10 +52,9 @@ class Game extends React.Component {
           squares: squaresCopy,
           moveLocation: location
         }]),
-        // history: history.concat([squaresCopy]),
         isXNext: !this.state.isXNext,
         stepNumber: history.length
-      }, () => console.log(this.state));
+      });
   }
 
 

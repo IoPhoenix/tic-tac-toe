@@ -1,12 +1,12 @@
 import React from 'react';
 
-function GameInfo(props) {
+function GameInfo({status, moves}) {
 
     return (
         <div className="board-info">
-            <div className="status mb3 fw5 f3">{props.status}</div>
+            <div className="status mb3 fw5 f3">{status}</div>
             <ul className="game-info list">
-                {props.moves}
+                {moves}
             </ul>
         </div>
     );

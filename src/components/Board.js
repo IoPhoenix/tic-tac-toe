@@ -2,24 +2,25 @@ import React from 'react';
 import Square from './Square';
 
 
+/* Board structure:
+<div className="board-row">
+    {renderSquare(0, [1,1])}
+    {renderSquare(1, [2,1])}
+    {renderSquare(2, [3,1])}
+</div>
+<div className="board-row">
+    {renderSquare(3, [1, 2])}
+    {renderSquare(4, [2, 2])}
+    {renderSquare(5, [3, 2])}
+</div>
+<div className="board-row">
+    {renderSquare(6, [1, 3])}
+    {renderSquare(7, [2, 3])}
+    {renderSquare(8, [3, 3])}
+</div> */
+
 function Board(props) {
-    /* Board structure:
-    <div className="board-row">
-        {renderSquare(0, [1,1])}
-        {renderSquare(1, [2,1])}
-        {renderSquare(2, [3,1])}
-    </div>
-    <div className="board-row">
-        {renderSquare(3, [1, 2])}
-        {renderSquare(4, [2, 2])}
-        {renderSquare(5, [3, 2])}
-    </div>
-    <div className="board-row">
-        {renderSquare(6, [1, 3])}
-        {renderSquare(7, [2, 3])}
-        {renderSquare(8, [3, 3])}
-    </div> */
-    
+
     const renderSquare = (i, location) => {
         const isWinner = props.winnerIndexes && props.winnerIndexes.includes(i);
 
@@ -31,7 +32,7 @@ function Board(props) {
                 isWinner={isWinner}
                 key={i}
                 value={props.squares[i]}
-                onClick={() => props.onClick(i, location)}
+                onClick={() => props.onClick(i)}
             />
         )
     }

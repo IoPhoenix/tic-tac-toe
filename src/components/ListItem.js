@@ -1,24 +1,22 @@
 import React from 'react';
 
 
-function ListItem(props) {
+function ListItem({moveLocation, moveNumber, isLast, onClick, description}) {
 
-  let moveLocation;
-
-  if (props.moveLocation) {
-    const [col, row] = props.moveLocation;
-    moveLocation = `(col #${col}, row#${row})`;
+  if (moveLocation) {
+    const [col, row] = moveLocation;
+    moveLocation = `(col #${col}, row #${row})`;
   }
 
   let className = 'move pointer grow bg-white ba b--light-gray f5 tc pa1';
-  if (props.isLast) className += ' fw6';
+  if (isLast) className += ' fw6';
 
   return (
-    <li className="mb2" key={props.moveNumber}>
+    <li className="mb2" key={moveNumber}>
       <button 
         className={className}
-        onClick={() => props.onClick(props.moveNumber)}>
-          {props.description} {moveLocation}
+        onClick={() => onClick(moveNumber)}>
+          {description} {moveLocation}
       </button>
     </li>
   )
