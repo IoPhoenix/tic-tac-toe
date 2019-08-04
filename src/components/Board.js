@@ -3,21 +3,39 @@ import Square from './Square';
 
 
 function Board(props) {
-
-    const renderSquare = (i) => {
+    /* Board structure:
+    <div className="board-row">
+        {renderSquare(0, [1,1])}
+        {renderSquare(1, [2,1])}
+        {renderSquare(2, [3,1])}
+    </div>
+    <div className="board-row">
+        {renderSquare(3, [1, 2])}
+        {renderSquare(4, [2, 2])}
+        {renderSquare(5, [3, 2])}
+    </div>
+    <div className="board-row">
+        {renderSquare(6, [1, 3])}
+        {renderSquare(7, [2, 3])}
+        {renderSquare(8, [3, 3])}
+    </div> */
+    
+    const renderSquare = (i, location) => {
         const isWinner = props.winnerIndexes && props.winnerIndexes.includes(i);
 
         // pass its current value to each Square
         // 'X', 'O', or null for empty squares
         return (
-            <Square 
+            <Square
+                location={location}
                 isWinner={isWinner}
                 key={i}
                 value={props.squares[i]}
-                onClick={() => props.onClick(i)}
+                onClick={() => props.onClick(i, location)}
             />
         )
     }
+
 
     const createBoard = () => {
         const board = [];
@@ -27,9 +45,9 @@ function Board(props) {
         for (let i = 0; i < 3; i++) {
             let children = [];
 
-            //Inner loop to create children
+            // Inner loop to create children
             for (let j = 0; j < 3; j++) {
-                children.push(renderSquare(count));
+                children.push(renderSquare(count, [j+1, i+1]));
                 count++;
             }
 
