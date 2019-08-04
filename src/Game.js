@@ -31,23 +31,22 @@ class Game extends React.Component {
     */ 
 
    handleClick = (i) => {
+     console.log('Button was clicked!');
+
      // throw away “future” history when we return back to past step:
      const history = this.state.history.slice(0, this.state.stepNumber + 1);
-
      const current = history[history.length - 1];
      const squaresCopy = current.slice();
       
       // prevent double click or game after winning:
       if (calculateWinner(squaresCopy) || squaresCopy[i]) return;
       
-      console.log('Button was clicked!');
-
       squaresCopy[i] = this.state.isXNext ? 'X' : '0';
       this.setState({
         history: history.concat([squaresCopy]),
         isXNext: !this.state.isXNext,
         stepNumber: history.length
-      })
+      });
   }
 
 
@@ -88,7 +87,11 @@ class Game extends React.Component {
         status =  'Winner is ' + winner;
         winnerIndexes = result.winnerIndexes;
     } else {
-        status = `Next player: ${this.state.isXNext ? 'X' : '0'}`;
+        if (this.state.stepNumber === 9) {
+          status = 'It\'a draw!';  
+        } else {
+          status = `Next player: ${this.state.isXNext ? 'X' : '0'}`;
+        }
     }
 
     return (
