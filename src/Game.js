@@ -54,7 +54,6 @@ function Game() {
 
 
   const goTo = (stepNumber) => {
-    setHistory(history.slice(0, stepNumber + 1));
     setIsXNext((stepNumber % 2) === 0);
     setStepNumber(stepNumber);
   }
@@ -66,13 +65,14 @@ function Game() {
 
   const winner = result && result.winner;
 
+  // display list of previous moves:
   const moves = history.map((currentHistory, moveNumber, array) => {
     const description = moveNumber ? 'Go to move #' + moveNumber : 'Game start';
-    const isLast = moveNumber === array.length - 1;
+    const isCurrent = moveNumber === stepNumber;
 
     return <ListItem 
               moveLocation={currentHistory.moveLocation}
-              isLast={isLast}
+              isCurrent={isCurrent}
               key={moveNumber}
               moveNumber={moveNumber} 
               description={description} 

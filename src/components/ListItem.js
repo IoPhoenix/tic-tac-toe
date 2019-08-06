@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function ListItem({moveLocation, moveNumber, isLast, onClick, description}) {
+function ListItem({moveLocation, moveNumber, isCurrent, onClick, description}) {
 
   if (moveLocation) {
     const [col, row] = moveLocation;
@@ -9,7 +9,7 @@ function ListItem({moveLocation, moveNumber, isLast, onClick, description}) {
   }
 
   let className = 'move pointer grow bg-white ba b--light-gray f5 tc pa1';
-  if (isLast) className += ' fw6';
+  if (isCurrent) className += ' fw6';
 
   return (
     <li className="mb2" key={moveNumber}>
